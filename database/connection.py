@@ -1,7 +1,8 @@
 from sqlmodel import create_engine, SQLModel, Session
 from core.config import DATABASE_URL
 
-engine = create_engine(DATABASE_URL, echo=False, connect_args={"check_same_thread": False})
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+engine = create_engine(DATABASE_URL, echo=False, connect_args=connect_args)
 
 def init_db():
     from models.models import User, Employee, Attendance, LeaveRequest, Payroll, Candidate, Appraisal
